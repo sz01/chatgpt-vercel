@@ -63,7 +63,7 @@ export const post: APIRoute = async context => {
     }
 
     if (pwd && pwd !== password) {
-      throw new Error("密码错误，请联系网站管理员。")
+      throw new Error("密码错误，请关注公众号“可阅日刊”，回复“AI”获取最新网站密码填写到设置中。")
     }
 
     if (!messages?.length) {
