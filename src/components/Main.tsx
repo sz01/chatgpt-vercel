@@ -9,6 +9,7 @@ import throttle from "just-throttle"
 import { isMobile } from "~/utils"
 import type { Setting } from "~/system"
 import { makeEventListener } from "@solid-primitives/event-listener"
+import { useEffect, useState } from "react";
 
 export interface PromptItem {
   desc: string
@@ -51,6 +52,18 @@ export default function (props: {
     250,
     { leading: false, trailing: true }
   )
+
+    const [userInfo, setUserInfo] = createSignal("");
+    const fetchUserInfo = async () => {
+        try {
+            const response = await fetch("/api/userinfo");
+            const data = await response.text();
+            setUserInfo(data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    fetchUserInfo();
 
   onMount(() => {
     makeEventListener(
@@ -227,6 +240,17 @@ export default function (props: {
     archiveCurrentMessage()
   }
 
+    async function getUserInfo() {
+        const response = await fetch("/api/userinfo", {
+            method: "GET"
+        })
+        const data = response.body
+        if (data !== 'fail') {
+            throw new Error("没有返回数据")
+        }
+
+    }
+
   async function fetchGPT(inputValue: string) {
     setLoading(true)
     const controller = new AbortController()
@@ -292,7 +316,7 @@ export default function (props: {
         // 取最后3个问题和最后1个回答
         if (assistantMsgNum < 1 && allMessageList[i]['role']==="assistant") {
             assistantMsgNum++;
-        } else if (assistantMsgNum < 3 && allMessageList[i]['role']==="user") {
+        } else if (userMsgNum < 3 && allMessageList[i]['role']==="user") {
             userMsgNum++;
         } else {
           continue;
@@ -379,6 +403,7 @@ export default function (props: {
 
   return (
     <div ref={containerRef!} class="mt-2">
+        <div>{userInfo}</div>
       <div class="px-1em mb-6em">
         <div
           id="message-container"
