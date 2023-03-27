@@ -52,18 +52,18 @@ export default function (props: {
     { leading: false, trailing: true }
   )
 
-    const [userInfo, setUserInfo] = createSignal("");
-    const fetchUserInfo = async () => {
-        try {
-            const response = await fetch("/api/userinfo");
-            const data = await response.json();
-            setUserInfo(data);
-            console.log(userInfo)
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    fetchUserInfo();
+    // const [userInfo, setUserInfo] = createSignal("");
+    // const fetchUserInfo = async () => {
+    //     try {
+    //         const response = await fetch("/api/userinfo");
+    //         const data = await response.json();
+    //         setUserInfo(data);
+    //         console.log(userInfo)
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // };
+    // fetchUserInfo();
 
   onMount(() => {
     makeEventListener(
@@ -392,7 +392,6 @@ export default function (props: {
 
   return (
     <div ref={containerRef!} class="mt-2">
-        <div>{userInfo}</div>
       <div class="px-1em mb-6em">
         <div
           id="message-container"
