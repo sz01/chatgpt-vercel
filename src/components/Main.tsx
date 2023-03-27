@@ -52,7 +52,7 @@ export default function (props: {
     { leading: false, trailing: true }
   )
 
-    const [userInfo, setUserInfo] = createSignal();
+    const [userInfo, setUserInfo] = createSignal("");
     const fetchUserInfo = async () => {
         try {
             const response = await fetch("/api/userinfo");
