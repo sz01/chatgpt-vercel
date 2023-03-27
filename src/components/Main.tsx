@@ -52,12 +52,12 @@ export default function (props: {
     { leading: false, trailing: true }
   )
 
-    const [userInfo, setUserInfo] = createSignal("");
+    const [userInfo, setUserInfo] = createSignal();
     const fetchUserInfo = async () => {
         try {
             const response = await fetch("/api/userinfo");
             const data = await response.text();
-            setUserInfo(data);
+            setUserInfo(JSON.parse(data));
         } catch (error) {
             console.error(error);
         }
@@ -403,6 +403,12 @@ export default function (props: {
   return (
     <div ref={containerRef!} class="mt-2">
         <div>{userInfo}</div>
+        {userInfo.msg === "未登录" && (
+            <div>请登录</div>
+        )}
+        {userInfo.msg !== "未登录" && (
+            <div>用户：{userInfo.data.nickname}</div>
+        )}
       <div class="px-1em mb-6em">
         <div
           id="message-container"
