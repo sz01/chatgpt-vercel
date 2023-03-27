@@ -287,20 +287,21 @@ export default function (props: {
       let assistantMsgNum = 0;
 
       let newMessageList = [];
-      for (var i = messageList().length - 2; i >= 0; i--) {
+      const allMessageList = messageList();
+      for (var i = allMessageList.length - 2; i >= 0; i--) {
         // 取最后3个问题和最后1个回答
-        if (assistantMsgNum < 1 && messageList()[i].role==="assistant") {
+        if (assistantMsgNum < 1 && allMessageList[i]['role']==="assistant") {
             assistantMsgNum++;
-        } else if (assistantMsgNum < 3 && messageList()[i].role==="user") {
+        } else if (assistantMsgNum < 3 && allMessageList[i]['role']==="user") {
             userMsgNum++;
         } else {
           continue;
         }
 
-        if (messageList[i].content.length > 100) {
-            messageList[i].content = messageList[i].content.slice(0, 100) + "...";
+        if (allMessageList[i]['content'].length > 100) {
+            allMessageList[i]['content'] = allMessageList[i]['content'].slice(0, 100) + "...";
         }
-        newMessageList.unshift(messageList()[i]);
+        newMessageList.unshift(allMessageList[i]);
       }
 
       return [...newMessageList, ...message]
