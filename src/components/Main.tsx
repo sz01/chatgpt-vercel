@@ -9,7 +9,6 @@ import throttle from "just-throttle"
 import { isMobile } from "~/utils"
 import type { Setting } from "~/system"
 import { makeEventListener } from "@solid-primitives/event-listener"
-import { useEffect, useState } from "react";
 
 export interface PromptItem {
   desc: string
