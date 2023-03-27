@@ -58,6 +58,7 @@ export default function (props: {
             const response = await fetch("/api/userinfo");
             const data = await response.json();
             setUserInfo(data);
+            console.log(userInfo)
         } catch (error) {
             console.error(error);
         }
@@ -239,17 +240,6 @@ export default function (props: {
     archiveCurrentMessage()
   }
 
-    async function getUserInfo() {
-        const response = await fetch("/api/userinfo", {
-            method: "GET"
-        })
-        const data = response.body
-        if (data !== 'fail') {
-            throw new Error("没有返回数据")
-        }
-
-    }
-
   async function fetchGPT(inputValue: string) {
     setLoading(true)
     const controller = new AbortController()
@@ -402,7 +392,7 @@ export default function (props: {
 
   return (
     <div ref={containerRef!} class="mt-2">
-        <div>{userInfo.msg}</div>
+        <div>{userInfo}</div>
       <div class="px-1em mb-6em">
         <div
           id="message-container"
