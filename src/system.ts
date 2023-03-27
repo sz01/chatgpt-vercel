@@ -1,8 +1,8 @@
 export const setting = {
-  continuousDialogue: true,
-  archiveSession: false,
+  continuousDialogue: false,
+  archiveSession: true,
   openaiAPIKey: "",
-  openaiAPITemperature: 60,
+  openaiAPITemperature: 80,
   password: "",
   systemRule: ""
 }

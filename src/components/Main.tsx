@@ -247,9 +247,7 @@ export default function (props: {
       method: "POST",
       body: JSON.stringify({
         messages: setting().continuousDialogue
-          ? [...messageList().slice(0, -1), ...message].filter(
-              k => k.role !== "error"
-            )
+          ? buildMessage(message)
           : message,
         key: setting().openaiAPIKey || undefined,
         temperature: setting().openaiAPITemperature / 100,
@@ -282,6 +280,30 @@ export default function (props: {
       }
       done = readerDone
     }
+  }
+
+  function buildMessage(message) {
+      let userMsgNum = 0;
+      let assistantMsgNum = 0;
+
+      let newMessageList = [];
+      for (var i = messageList().length - 2; i >= 0; i--) {
+        // 取最后3个问题和最后1个回答
+        if (assistantMsgNum < 1 && messageList()[i].role==="assistant") {
+            assistantMsgNum++;
+        } else if (assistantMsgNum < 3 && messageList()[i].role==="user") {
+            userMsgNum++;
+        } else {
+          continue;
+        }
+
+        if (messageList[i].content.length > 100) {
+            messageList[i].content = messageList[i].content.slice(0, 100) + "...";
+        }
+        newMessageList.unshift(messageList()[i]);
+      }
+
+      return [...newMessageList, ...message]
   }
 
   function clearSession() {
