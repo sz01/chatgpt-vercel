@@ -402,12 +402,7 @@ export default function (props: {
 
   return (
     <div ref={containerRef!} class="mt-2">
-        {userInfo.code === 1 && (
-            <div>请登录</div>
-        )}
-        {userInfo.code === 0 && (
-            <div>{userInfo.data.nickname}</div>
-        )}
+        <div>{userInfo.msg}</div>
       <div class="px-1em mb-6em">
         <div
           id="message-container"
